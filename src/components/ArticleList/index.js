@@ -4,35 +4,31 @@ import { useSelector } from "react-redux";
 import { Card, Col, Row } from "antd";
 import Meta from "antd/es/card/Meta";
 import NoArticles from "../NoArticle";
+import './ArticleList.css'; 
+import { UserOutlined } from "@ant-design/icons";
 
 const ArticleList = () => {
-  const { data, } = useSelector((state) => state.news);
+  const { data } = useSelector((state) => state.news);
   const dummyImageUrl = 'https://via.placeholder.com/150';
+
   const handleError = (e) => {
     e.target.src = dummyImageUrl;
   };
+
   return (
     <>
       {data?.length > 0 ? (
         <div>
-          <div
-            style={{
-              position: "fixed",
-              top: 0,
-              left: 0,
-              right: 0,
-              background: "white",
-              zIndex: 1000,
-              padding: "10px",
-              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-            }}
-          >
+          <div className="fixed-header">
             <FilterComponent />
+            <div className="profile-icon">
+              <UserOutlined />
+            </div>
           </div>
-          <div style={{ marginTop: "20px" }}>
+          <div className="content">
             <Row gutter={16}>
               {data
-                .filter((article) => !Object.keys(article).some(key => article[key] === "[Removed]") )
+                .filter((article) => !Object.keys(article).some(key => article[key] === "[Removed]"))
                 .map((article, index) => (
                   <Col
                     xs={24}
@@ -40,7 +36,7 @@ const ArticleList = () => {
                     md={8}
                     lg={6}
                     key={article.url || index}
-                    style={{ marginBottom: "16px", padding: "0 8px" }}
+                    className="article-col"
                   >
                     <Card
                       title={article.title}
@@ -50,34 +46,20 @@ const ArticleList = () => {
                           alt={article.title}
                           src={article.urlToImage}
                           onError={handleError}
-                          style={{
-                            width: "100%",
-                            height: "auto",
-                            maxHeight: "150px",
-                            objectFit: "cover",
-                          }}
+                          className="article-image"
                         />
                       }
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        height: "100%",
-                      }} // Set card to fill its container
+                      className="article-card"
                     >
                       <Meta
                         description={article.description}
-                        style={{
-                          flex: 1,
-                          display: "flex",
-                          flexDirection: "column",
-                          justifyContent: "space-between",
-                        }}
+                        className="article-meta"
                       />
                       <a
                         href={article.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        style={{ marginTop: "8px", textAlign: "center" }}
+                        className="read-more-link"
                       >
                         Read more
                       </a>

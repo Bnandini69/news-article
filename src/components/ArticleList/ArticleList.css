@@ -1,0 +1,69 @@
+
+.fixed-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    z-index: 1000;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+  }
+  
+  .fixed-header .profile-icon {
+    font-size: 24px; 
+    cursor: pointer;
+  }
+  
+  @media (max-width: 768px) {
+    .fixed-header {
+      height: 50px;
+      padding: 8px;
+    }
+  }
+  
+  .content {
+    margin-top: 90px; 
+  }
+  
+  @media (max-width: 768px) {
+    .content {
+      margin-top: 60px;
+    }
+  }
+  
+  .article-col {
+    margin-bottom: 16px;
+    padding: 0 8px;
+  }
+  
+  .article-image {
+    width: 100%;
+    height: auto;
+    max-height: 150px;
+    object-fit: cover;
+  }
+  
+  .article-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  
+  .article-meta {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .read-more-link {
+    margin-top: 8px;
+    text-align: center;
+    display: block;
+  }
+  
