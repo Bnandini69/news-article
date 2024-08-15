@@ -81,7 +81,6 @@ const FilterComponent = () => {
     }
     return [];
   };
-  console.log(getMomentDateRange())
   const popoverContent = (
     <Form layout="vertical" style={{ width: "300px" }}>
       <Collapse accordion>

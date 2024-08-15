@@ -15,64 +15,69 @@ const ArticleList = () => {
     e.target.src = dummyImageUrl;
   };
 
+  const header = (
+    <div className="fixed-header">
+      <FilterComponent />
+      <div className="profile-icon">
+        <UserOutlined />
+      </div>
+    </div>
+  );
+
+  const content = (
+    <Row gutter={16}>
+      {data
+        .filter(
+          (article) =>
+            !Object.keys(article).some((key) => article[key] === "[Removed]") &&
+            article.description
+        )
+        .map((article, index) => (
+          <Col
+            xs={24}
+            sm={12}
+            md={8}
+            lg={6}
+            key={article.url || index}
+            className="article-col"
+          >
+            <Card
+              title={article.title}
+              hoverable
+              cover={
+                <img
+                  alt={article.title}
+                  src={article.urlToImage || dummyImageUrl}
+                  onError={handleError}
+                  className="article-image"
+                />
+              }
+              className="article-card"
+            >
+              <Meta
+                description={article.description}
+                className="article-meta"
+              />
+              <a
+                href={article.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="read-more-link"
+              >
+                Read more
+              </a>
+            </Card>
+          </Col>
+        ))}
+    </Row>
+  );
+
   return (
     <>
       {data?.length > 0 ? (
         <div>
-          <div className="fixed-header">
-            <FilterComponent />
-            <div className="profile-icon">
-              <UserOutlined />
-            </div>
-          </div>
-          <div className="content">
-            <Row gutter={16}>
-              {data
-                .filter(
-                  (article) =>
-                    !Object.keys(article).some(
-                      (key) => article[key] === "[Removed]" 
-                    )&& article.description
-                )
-                .map((article, index) => (
-                  <Col
-                    xs={24}
-                    sm={12}
-                    md={8}
-                    lg={6}
-                    key={article.url || index}
-                    className="article-col"
-                  >
-                    <Card
-                      title={article.title}
-                      hoverable
-                      cover={
-                        <img
-                          alt={article.title}
-                          src={article.urlToImage || dummyImageUrl}
-                          onError={handleError}
-                          className="article-image"
-                        />
-                      }
-                      className="article-card"
-                    >
-                      <Meta
-                        description={article.description}
-                        className="article-meta"
-                      />
-                      <a
-                        href={article.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="read-more-link"
-                      >
-                        Read more
-                      </a>
-                    </Card>
-                  </Col>
-                ))}
-            </Row>
-          </div>
+          {header}
+          <div className="content">{content}</div>
         </div>
       ) : (
         <NoArticles />

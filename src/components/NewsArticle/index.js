@@ -26,7 +26,7 @@ const NewsArticle = () => {
     };
     loadPreferences();
   }, []);
-  // Fetch articles with debounce
+  // Fetch articles with the hook
   const { fetchArticles } = useFetchArticles();
 
   useEffect(() => {

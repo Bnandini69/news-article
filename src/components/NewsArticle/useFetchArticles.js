@@ -1,6 +1,10 @@
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchDataFailure, fetchDataRequest, fetchDataSuccess } from "../../slices/newsReducer";
+import {
+  fetchDataFailure,
+  fetchDataRequest,
+  fetchDataSuccess,
+} from "../../slices/newsReducer";
 
 const API_KEYS = {
   NEWSAPI: "157fb9d58adc4b34bbb05eb4da5c76ef",
@@ -18,8 +22,11 @@ const DUMMY_IMAGE_URL = "https://via.placeholder.com/150";
 
 const useFetchArticles = () => {
   const dispatch = useDispatch();
+
+  //get the filters
   const { filters } = useSelector((state) => state.news);
 
+  // This function helps to get params for three news apis
   const prepareParams = () => {
     // Prepare parameters for NewsAPI
     const newsApiParams = new URLSearchParams({
@@ -61,6 +68,7 @@ const useFetchArticles = () => {
     return { nytParams, guardianParams, newsApiParams };
   };
 
+  // This function helps to merge the results from three news apis
   const getCombinedResults = (results) => {
     // Normalize and combine articles
     const combinedResults = [];
@@ -82,14 +90,16 @@ const useFetchArticles = () => {
     // NYT
     const nytResult = results[1].data;
     if (nytResult) {
-      const normalizedNytArticles = nytResult?.response?.docs?.map((article) => ({
-        title: article.headline.main,
-        description: article.snippet,
-        url: article.web_url,
-        urlToImage: article.multimedia?.[0]?.url
-          ? `https://www.nytimes.com/${article.multimedia[0].url}`
-          : DUMMY_IMAGE_URL,
-      }));
+      const normalizedNytArticles = nytResult?.response?.docs?.map(
+        (article) => ({
+          title: article.headline.main,
+          description: article.snippet,
+          url: article.web_url,
+          urlToImage: article.multimedia?.[0]?.url
+            ? `https://www.nytimes.com/${article.multimedia[0].url}`
+            : DUMMY_IMAGE_URL,
+        })
+      );
       combinedResults.push(...normalizedNytArticles);
     }
 
@@ -110,6 +120,7 @@ const useFetchArticles = () => {
     return combinedResults;
   };
 
+  // This function manages api calls
   const fetchArticles = useCallback(async () => {
     dispatch(fetchDataRequest());
     const { nytParams, guardianParams, newsApiParams } = prepareParams();
