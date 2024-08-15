@@ -7,8 +7,6 @@ const newsSlice = createSlice({
     filters:{categories:[],sources:[],keyword:""},
     loading: false,
     error: null,
-    authors:[],
-    sources:[],
   },
   reducers: {
     fetchDataRequest: (state) => {
@@ -27,16 +25,10 @@ const newsSlice = createSlice({
     saveFilter: (state, action) => {
       state.filters = action.payload;
     },
-    saveSources:(state, action) => {
-      state.sources = action.payload;
-    },
-    saveAuthors:(state, action) => {
-      state.authors = action.payload;
-    },
   },
 });
 
-export const { fetchDataRequest, fetchDataSuccess, fetchDataFailure,saveFilter,saveSources,saveAuthors } =
+export const { fetchDataRequest, fetchDataSuccess, fetchDataFailure,saveFilter } =
   newsSlice.actions;
 
 export default newsSlice.reducer;

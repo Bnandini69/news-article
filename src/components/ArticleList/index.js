@@ -31,8 +31,8 @@ const ArticleList = () => {
                 .filter(
                   (article) =>
                     !Object.keys(article).some(
-                      (key) => article[key] === "[Removed]"
-                    )
+                      (key) => article[key] === "[Removed]" 
+                    )&& article.description
                 )
                 .map((article, index) => (
                   <Col

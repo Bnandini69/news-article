@@ -1,17 +1,11 @@
-import React, { useEffect, useState, useCallback } from "react";
-import {  message, Spin } from "antd";
+import React, { useEffect, useState } from "react";
+import {  Spin } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  fetchDataFailure,
-  fetchDataRequest,
-  fetchDataSuccess,
   saveFilter,
 } from "../../slices/newsReducer";
-import debounce from "lodash.debounce"; 
 import ArticleList from "../ArticleList";
-
-const API_KEY = "157fb9d58adc4b34bbb05eb4da5c76ef";
-const BASE_URL = "https://newsapi.org/v2/everything";
+import useFetchArticles from "../useFetchArticles";
 
 const NewsFeed = () => {
   const { filters, loading, data } = useSelector((state) => state.news);
@@ -26,7 +20,6 @@ const NewsFeed = () => {
         try {
           const preferences = JSON.parse(preferredData);
           dispatch(saveFilter(preferences));
-      
         } catch (error) {
           console.error("Failed to parse preferences from localStorage", error);
         }
@@ -36,40 +29,7 @@ const NewsFeed = () => {
     loadPreferences();
   }, []);
   // Fetch articles with debounce
-  const fetchArticles = useCallback(
-    debounce(async () => {
-      dispatch(fetchDataRequest());
-      const params = new URLSearchParams({
-        q: filters?.keyword||"tesla",
-        ...(filters.dateRange?.length === 2 && {
-          from: filters.dateRange[0],
-          to: filters.dateRange[1],
-        }),
-        ...(filters.categories.length > 0 && {
-          categories: filters.categories.join(","),
-        }),
-        ...(filters.sources.length > 0 && {
-          sources: filters.sources.join(","),
-        }),
-        apiKey: API_KEY,
-      }).toString();
-
-      try {
-        const response = await fetch(`${BASE_URL}?${params}`);
-        if (!response.ok)
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        const result = await response.json();
-        dispatch(fetchDataSuccess(result.articles));
-        if (!result.articles.length > 0) {
-          localStorage.clear();
-        }
-      } catch (error) {
-        dispatch(fetchDataFailure(error.message));
-        message.error("Error fetching the news articles");
-      }
-    }, 500),
-    [filters]
-  );
+  const {fetchArticles} = useFetchArticles();
 
   useEffect(() => {
     if (isChecked && !loading) {
