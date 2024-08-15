@@ -1,11 +1,6 @@
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import debounce from "lodash.debounce";
-import {
-  fetchDataFailure,
-  fetchDataRequest,
-  fetchDataSuccess,
-} from "../slices/newsReducer";
+import { fetchDataFailure, fetchDataRequest, fetchDataSuccess } from "../../slices/newsReducer";
 
 const API_KEYS = {
   NEWSAPI: "157fb9d58adc4b34bbb05eb4da5c76ef",
@@ -24,6 +19,7 @@ const DUMMY_IMAGE_URL = "https://via.placeholder.com/150";
 const useFetchArticles = () => {
   const dispatch = useDispatch();
   const { filters } = useSelector((state) => state.news);
+
   const prepareParams = () => {
     // Prepare parameters for NewsAPI
     const newsApiParams = new URLSearchParams({
@@ -72,7 +68,7 @@ const useFetchArticles = () => {
     // NewsAPI
     const newsApiResult = results?.[0]?.data;
     if (newsApiResult) {
-      const normalizedNewsApiArticles = newsApiResult.articles.map(
+      const normalizedNewsApiArticles = newsApiResult?.articles?.map(
         (article) => ({
           title: article.title,
           description: article.description,
@@ -86,7 +82,7 @@ const useFetchArticles = () => {
     // NYT
     const nytResult = results[1].data;
     if (nytResult) {
-      const normalizedNytArticles = nytResult.response.docs.map((article) => ({
+      const normalizedNytArticles = nytResult?.response?.docs?.map((article) => ({
         title: article.headline.main,
         description: article.snippet,
         url: article.web_url,
@@ -100,7 +96,7 @@ const useFetchArticles = () => {
     // Guardian
     const guardianResult = results[2].data;
     if (guardianResult) {
-      const normalizedGuardianArticles = guardianResult.response.results.map(
+      const normalizedGuardianArticles = guardianResult?.response?.results?.map(
         (article) => ({
           title: article.webTitle,
           description: article.sectionName,
@@ -113,9 +109,9 @@ const useFetchArticles = () => {
 
     return combinedResults;
   };
+
   const fetchArticles = useCallback(async () => {
     dispatch(fetchDataRequest());
-
     const { nytParams, guardianParams, newsApiParams } = prepareParams();
 
     try {

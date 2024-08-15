@@ -1,6 +1,6 @@
 import React from 'react';
 import { Empty, Button, Typography } from 'antd';
-import '../NewsFeed.css'; 
+import './NoArticle.css'; 
 
 const { Title, Paragraph } = Typography;
 

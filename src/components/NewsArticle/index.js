@@ -4,10 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   saveFilter,
 } from "../../slices/newsReducer";
-import ArticleList from "../ArticleList";
-import useFetchArticles from "../useFetchArticles";
+import ArticleList from "./ArticleList";
+import useFetchArticles from "./useFetchArticles";
 
-const NewsFeed = () => {
+const NewsArticle = () => {
   const { filters, loading, data } = useSelector((state) => state.news);
   const dispatch = useDispatch();
   const [isChecked, setIsChecked] = useState(false);
@@ -55,4 +55,4 @@ const NewsFeed = () => {
   );
 };
 
-export default NewsFeed;
+export default NewsArticle;

@@ -15,7 +15,7 @@ import { FilterOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { categoriesList, sources } from "../Newsenum";
 import { saveFilter } from "../../slices/newsReducer";
-import "../NewsFeed.css";
+import moment from "moment";
 
 const { RangePicker } = DatePicker;
 const { Panel } = Collapse;
@@ -27,7 +27,7 @@ const FilterComponent = () => {
 
   const [appliedFilter, setAppliedFilter] = useState({
     keyword: filters.keyword || "",
-    dateRange: [],
+    dateRange:filters.dateRange || [],
     categories: filters.categories || [],
     sources: filters.sources || [],
     authors: filters.authors || [],
@@ -72,6 +72,16 @@ const FilterComponent = () => {
     });
     handleFilter();
   };
+  const getMomentDateRange = () => {
+    if (filters.dateRange?.length === 2) {
+      return [
+        moment(filters.dateRange[0], "YYYY-MM-DD"),
+        moment(filters.dateRange[1], "YYYY-MM-DD"),
+      ];
+    }
+    return [];
+  };
+  console.log(getMomentDateRange())
   const popoverContent = (
     <Form layout="vertical" style={{ width: "300px" }}>
       <Collapse accordion>
@@ -143,11 +153,7 @@ const FilterComponent = () => {
           <RangePicker
             format="YYYY-MM-DD"
             onChange={handleDateChange}
-            value={
-              appliedFilter.dateRange.length === 2
-                ? appliedFilter.dateRange
-                : []
-            }
+            value={getMomentDateRange()}
           />
         </Col>
       </Row>

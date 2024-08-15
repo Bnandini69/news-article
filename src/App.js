@@ -1,8 +1,8 @@
 import React from 'react';
-import NewsFeed from './components/NewsFeed';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import  { store } from './store';
+import NewsArticle from './components/NewsArticle';
 
 function App() {
   return (
@@ -10,7 +10,7 @@ function App() {
     <Router>
     <div>
       <Routes>
-        <Route path="/" element={<NewsFeed />} />
+        <Route path="/" element={<NewsArticle />} />
       </Routes>
     </div>
   </Router>
