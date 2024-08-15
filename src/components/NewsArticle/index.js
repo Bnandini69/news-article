@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
-import {  Spin } from "antd";
+import { Spin } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  saveFilter,
-} from "../../slices/newsReducer";
-import ArticleList from "./ArticleList";
+import { saveFilter } from "../../slices/newsReducer";
 import useFetchArticles from "./useFetchArticles";
+import ArticleList from "./ArticleList";
 
 const NewsArticle = () => {
   const { filters, loading, data } = useSelector((state) => state.news);
@@ -29,7 +27,7 @@ const NewsArticle = () => {
     loadPreferences();
   }, []);
   // Fetch articles with debounce
-  const {fetchArticles} = useFetchArticles();
+  const { fetchArticles } = useFetchArticles();
 
   useEffect(() => {
     if (isChecked && !loading) {
