@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const newsSlice = createSlice({
   name: "news",
   initialState: {
-    data: [],
+    data: null,
     filters:{},
     loading: false,
     error: null,
@@ -22,6 +22,7 @@ const newsSlice = createSlice({
     fetchDataFailure: (state, action) => {
       state.loading = false;
       state.error = action.payload;
+      state.data=[];
     },
     saveFilter: (state, action) => {
       state.filters = action.payload;

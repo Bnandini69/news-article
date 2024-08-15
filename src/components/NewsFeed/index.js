@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { Card, Col, Row, message, Spin } from "antd";
+import {  message, Spin } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchDataFailure,
@@ -7,15 +7,14 @@ import {
   fetchDataSuccess,
   saveFilter,
 } from "../../slices/newsReducer";
-import debounce from "lodash.debounce"; // Add lodash.debounce package
-import Meta from "antd/es/card/Meta";
+import debounce from "lodash.debounce"; 
 import ArticleList from "../ArticleList";
 
 const API_KEY = "157fb9d58adc4b34bbb05eb4da5c76ef";
 const BASE_URL = "https://newsapi.org/v2/everything";
 
 const NewsFeed = () => {
-  const { data, filters, loading } = useSelector((state) => state.news);
+  const { filters, loading, data } = useSelector((state) => state.news);
   const dispatch = useDispatch();
   const [isChecked, setIsChecked] = useState(false);
 
@@ -60,6 +59,9 @@ const NewsFeed = () => {
           throw new Error(`HTTP error! Status: ${response.status}`);
         const result = await response.json();
         dispatch(fetchDataSuccess(result.articles));
+        if (!result.articles.length > 0) {
+          localStorage.setItem("preferences", {});
+        }
       } catch (error) {
         dispatch(fetchDataFailure(error.message));
         message.error("Error fetching the news articles");
@@ -86,8 +88,7 @@ const NewsFeed = () => {
           }}
         />
       ) : (
-        isChecked &&
-       <ArticleList />
+        isChecked && data && <ArticleList />
       )}
     </div>
   );

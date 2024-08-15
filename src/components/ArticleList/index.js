@@ -3,13 +3,14 @@ import FilterComponent from "../Header";
 import { useSelector } from "react-redux";
 import { Card, Col, Row } from "antd";
 import Meta from "antd/es/card/Meta";
+import NoArticles from "../NoArticle";
 
 const ArticleList = () => {
-  const { data} = useSelector((state) => state.news);
+  const { data, } = useSelector((state) => state.news);
 
   return (
     <>
-      {data.length > 0 ? (
+      {data?.length > 0 ? (
         <div>
           <div
             style={{
@@ -83,7 +84,7 @@ const ArticleList = () => {
           </div>
         </div>
       ) : (
-        "No articles found"
+       <NoArticles />
       )}
     </>
   );
