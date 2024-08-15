@@ -26,11 +26,12 @@ const NewsFeed = () => {
         try {
           const preferences = JSON.parse(preferredData);
           dispatch(saveFilter(preferences));
-          setIsChecked(true);
+      
         } catch (error) {
           console.error("Failed to parse preferences from localStorage", error);
         }
       }
+      setIsChecked(true);
     };
     loadPreferences();
   }, []);
@@ -39,7 +40,7 @@ const NewsFeed = () => {
     debounce(async () => {
       dispatch(fetchDataRequest());
       const params = new URLSearchParams({
-        q: filters?.keyword || "tesla",
+        q: filters?.keyword,
         ...(filters.dateRange?.length === 2 && {
           from: filters.dateRange[0],
           to: filters.dateRange[1],
@@ -60,7 +61,7 @@ const NewsFeed = () => {
         const result = await response.json();
         dispatch(fetchDataSuccess(result.articles));
         if (!result.articles.length > 0) {
-          localStorage.setItem("preferences", {});
+          localStorage.clear();
         }
       } catch (error) {
         dispatch(fetchDataFailure(error.message));

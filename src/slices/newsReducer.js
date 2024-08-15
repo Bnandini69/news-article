@@ -4,7 +4,7 @@ const newsSlice = createSlice({
   name: "news",
   initialState: {
     data: null,
-    filters:{},
+    filters:{categories:[],sources:[],keyword:"tesla"},
     loading: false,
     error: null,
     authors:[],

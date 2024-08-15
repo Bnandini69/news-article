@@ -32,7 +32,7 @@ const ArticleList = () => {
           <div style={{ marginTop: "20px" }}>
             <Row gutter={16}>
               {data
-                .filter((article) => article.title && article.description )
+                .filter((article) => !Object.keys(article).some(key => article[key] === "[Removed]") )
                 .map((article, index) => (
                   <Col
                     xs={24}
