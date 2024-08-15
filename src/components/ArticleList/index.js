@@ -1,5 +1,8 @@
 import React from "react";
 import FilterComponent from "../Header";
+import { useSelector } from "react-redux";
+import { Card, Col, Row } from "antd";
+import Meta from "antd/es/card/Meta";
 
 const ArticleList = () => {
   const { data} = useSelector((state) => state.news);
