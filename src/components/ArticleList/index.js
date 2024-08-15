@@ -7,7 +7,10 @@ import NoArticles from "../NoArticle";
 
 const ArticleList = () => {
   const { data, } = useSelector((state) => state.news);
-
+  const dummyImageUrl = 'https://via.placeholder.com/150';
+  const handleError = (e) => {
+    e.target.src = dummyImageUrl;
+  };
   return (
     <>
       {data?.length > 0 ? (
@@ -29,7 +32,7 @@ const ArticleList = () => {
           <div style={{ marginTop: "20px" }}>
             <Row gutter={16}>
               {data
-                .filter((article) => article.title && article.description)
+                .filter((article) => article.title && article.description )
                 .map((article, index) => (
                   <Col
                     xs={24}
@@ -46,6 +49,7 @@ const ArticleList = () => {
                         <img
                           alt={article.title}
                           src={article.urlToImage}
+                          onError={handleError}
                           style={{
                             width: "100%",
                             height: "auto",
