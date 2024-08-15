@@ -7,7 +7,6 @@ import {
   fetchDataSuccess,
   saveFilter,
 } from "../../slices/newsReducer";
-import FilterComponent from "../Header";
 import debounce from "lodash.debounce"; // Add lodash.debounce package
 import Meta from "antd/es/card/Meta";
 import ArticleList from "../ArticleList";

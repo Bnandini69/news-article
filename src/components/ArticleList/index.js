@@ -1,4 +1,5 @@
 import React from "react";
+import FilterComponent from "../Header";
 
 const ArticleList = () => {
   const { data} = useSelector((state) => state.news);
