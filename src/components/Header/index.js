@@ -73,6 +73,7 @@ const FilterComponent = () => {
                 onSearch={handleSearch}
                 enterButton="Search"
                 value={appliedFilter.keyword}
+                onChange={(e) => handleChange("keyword", e.target.value)}
               />
             </Col>
             <Col>

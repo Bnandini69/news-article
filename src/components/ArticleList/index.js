@@ -4,12 +4,12 @@ import { useSelector } from "react-redux";
 import { Card, Col, Row } from "antd";
 import Meta from "antd/es/card/Meta";
 import NoArticles from "../NoArticle";
-import './ArticleList.css'; 
+import "./ArticleList.css";
 import { UserOutlined } from "@ant-design/icons";
 
 const ArticleList = () => {
   const { data } = useSelector((state) => state.news);
-  const dummyImageUrl = 'https://via.placeholder.com/150';
+  const dummyImageUrl = "https://via.placeholder.com/150";
 
   const handleError = (e) => {
     e.target.src = dummyImageUrl;
@@ -28,7 +28,12 @@ const ArticleList = () => {
           <div className="content">
             <Row gutter={16}>
               {data
-                .filter((article) => !Object.keys(article).some(key => article[key] === "[Removed]"))
+                .filter(
+                  (article) =>
+                    !Object.keys(article).some(
+                      (key) => article[key] === "[Removed]"
+                    )
+                )
                 .map((article, index) => (
                   <Col
                     xs={24}
@@ -44,7 +49,7 @@ const ArticleList = () => {
                       cover={
                         <img
                           alt={article.title}
-                          src={article.urlToImage}
+                          src={article.urlToImage || dummyImageUrl}
                           onError={handleError}
                           className="article-image"
                         />
@@ -70,7 +75,7 @@ const ArticleList = () => {
           </div>
         </div>
       ) : (
-       <NoArticles />
+        <NoArticles />
       )}
     </>
   );

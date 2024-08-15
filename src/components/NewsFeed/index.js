@@ -40,7 +40,7 @@ const NewsFeed = () => {
     debounce(async () => {
       dispatch(fetchDataRequest());
       const params = new URLSearchParams({
-        q: filters?.keyword,
+        q: filters?.keyword||"tesla",
         ...(filters.dateRange?.length === 2 && {
           from: filters.dateRange[0],
           to: filters.dateRange[1],
